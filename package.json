@@ -2,6 +2,10 @@
   "name": "notification.service",
   "version": "1.0.0",
   "description": "Notification Service",
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://github.com/cstpalash/notification.git"
+  },
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
