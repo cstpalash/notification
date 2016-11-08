@@ -1,0 +1,16 @@
+{
+  "name": "notification.service",
+  "version": "1.0.0",
+  "description": "Notification Service",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Palash Roy",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.10.2",
+    "moment": "^2.15.2",
+    "socket.io": "^1.5.1"
+  }
+}

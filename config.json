@@ -1,0 +1,13 @@
+{
+	"namespaces" : [
+		{
+			"name" : "default",
+			"active" : true
+		},
+		{
+			"name" : "helpdesk",
+			"active" : true
+		}
+	],
+	"dateFormat" : "MMM DD YYYY, h:mm:ss a"
+}

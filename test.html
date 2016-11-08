@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Notification Service</title>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" >
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+      body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Notification Service</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+          <h3>Open this page in multiple tabs and change something</h3>
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="firstName">First name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="First name">
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Last name">
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; 2016 Some company. All Rights Reserved</p>
+      </footer>
+    </div> <!-- /container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="/script"></script>
+
+    <script type="text/javascript">
+
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+         
+      var host = 'http://localhost:3000/';
+      var namespace = 'default';
+      var user = 'dummy';
+      var context = 'default.test';
+
+      initNotificationService(host, namespace, user, context, function(n){
+        toastr["warning"](n.data.message, "Warning");
+      });
+
+      $(document).ready(function(){
+        $("input").on('change keyup paste', function(e){
+          var fieldName = getInputLabel($(this));
+          var fieldValue = $(this).val();
+
+          var notificationData = {
+            "user" : user,
+            "context" : context,
+            "type" : 'allButMeWithContext',
+            "dataType" : 'test.edit',
+            "data" : {
+              "message" : "'" + fieldName + "' is being modified by " + user
+            }
+          };
+
+          notify(notificationData);
+        });
+      });
+
+      function getInputLabel(input){
+        var label = $('label[for="'+input.attr('id')+'"]');
+
+        if(label.length <= 0) {
+            var parentElem = input.prev(),
+                parentTagName = parentElem.get(0).tagName.toLowerCase();
+
+            if(parentTagName == "label") {
+                label = parentElem;
+            }
+        }
+
+        return label.text();
+      }
+    </script>
+  </body>
+</html>
